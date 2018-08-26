@@ -1,0 +1,49 @@
+@charset 'utf8';
+@import 'utils';
+
+// button 예제. 눌렀을 때 '딸깍' 효과남ㅋㅋㅋ
+// css 공부하기에도 좋은 예제!
+
+.button{
+  // oc = open-color. $oc-색상이름-명암
+  // https://github.com/yeun/open-color 참고.
+  background: $oc-green-7;
+  transition: all .2s ease-in;
+  display: inline-block;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  color: white;
+  position: fixed;
+  
+  @include place-at-center();
+
+  font-size: 2rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+
+  width: 1200px;
+  // 반응형 디자인
+  @include media('<huge'){
+    width: 1024px;
+  }
+
+  @include media('<large'){
+    width: 768px;
+  }
+  
+  @include media('<medium'){
+    width: 90%;
+  }
+
+  // 마우스 상태에 따라 다른 효과 지정.
+  &:hover{
+    background: $oc-green-6;
+  }
+
+  &:active{
+    margin-top: 3px;
+    background: $oc-green-8;
+  }
+}
