@@ -45,9 +45,33 @@ class App extends Component {
     });
   };
 
+  // todo 아이템 toggle하기
+  handleToggle = id => {
+    // id로 배열의 index를 찾는다.
+    const { todos } = this.state;
+    const index = todos.findIndex(todo => todo.id === id);
+    //이 함수의 원리?? --> array.findeIndex()는 내장 메서드! 원노트(js/method) 정리 참고.
+
+    // 찾은 데이터의 done 값을 반전시킴.
+    const toggled = {
+      ...todos[index],
+      done: !todos[index].done
+    };
+
+    // slice를 사용하여 우리가 찾은 index 전후의 데이터들을 복사함.
+    // 그리고 그 사이에는 변경된 todo 객체를 넣어줌.
+    this.setState({
+      todos: [
+        ...todos.slice(0, index),
+        toggled,
+        ...todos.slice(index + 1, todos.length)
+      ]
+    });
+  };
+
   render() {
     const { input, todos } = this.state; // const input = this.state.input;
-    const { handleChange, handleInsert } = this; // const handleChange = this.handleChange;
+    const { handleChange, handleInsert, handleToggle } = this; // const handleChange = this.handleChange;
 
     return (
       <PageTemplate>
@@ -57,7 +81,7 @@ class App extends Component {
           onInsert={handleInsert}
           value={input}
         />
-        <TodoList todos={todos} />
+        <TodoList todos={todos} onToggle={handleToggle} />
       </PageTemplate>
     );
   }
