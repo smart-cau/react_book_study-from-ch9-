@@ -33,7 +33,13 @@ class TodoItem extends Component {
         <div className={cx("text", { done })}>{children}</div>
         {/* 현재 아래 코드에는 오류가 있음. 아래 div의 onClick 이벤트가 부모 div의 onClick 이벤트와 연결되어 있어
         기대하는 대로 동작하지 않을 수 있음. 추후 수정할 것임. */}
-        <div className={cx("delete")} onClick={onRemove}>
+        <div
+          className={cx("delete")}
+          onClick={e => {
+            onRemove();
+            e.stopPropagation(); // 원노트(REACT/React info from ~)에서 bubble vs capture 참고.
+          }}
+        >
           [지우기]
         </div>
       </div>
