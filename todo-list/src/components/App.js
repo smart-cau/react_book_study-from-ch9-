@@ -1,65 +1,64 @@
+/* Chapter 11. 컴포넌트 리렌더링 최적화
+* rerendering속성 : 부모가 rerendering되면 자식도 rerendering 된다. -> 불필요한 자원낭비 초래 가능.
+* input에 내용을 입력하면, TodoInput에 변화가 생긴 것이므로 TodoInput만 rerendering되야 하는데
+* 다른 Components들, TodoList와 TodoItem도 모두 rerendering되버림. -> rerendering속도 저하의 원인!
+* 이 불필요한 rerendering을 TodoList에 shouldComponentUpdate를 통해 제어할 것임.
+*/
+
 import React, { Component } from "react";
 import PageTemplate from "./PageTemplate";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
+// 길이가 500이고 내용을 아래와 같이 채운 배열을 만듬. (dummy data)
+const initialTodos = new Array(500)
+  .fill(0)
+  .map((foo, index) => ({ id: index, text: `일정 ${index}`, done: false }));
+
 class App extends Component {
   state = {
-    input: "", // input 값.
-    // 일정 데이터 초기값.
-    todos: [
-      { id: 0, text: "리액트 공부하기", done: true },
-      { id: 1, text: "컴포넌트 스타일링 해보기", done: false }
-    ]
+    input: "",
+    todos: initialTodos
   };
 
   handleChange = e => {
-    const { value } = e.target; // 비구조화 할당 사용! 이거 유용하네
+    const { value } = e.target;
 
     this.setState({
       input: value
     });
   };
 
-  // 일정 data 안에 들어가는 id 값
-  id = 1; // 미리 배열에 data를 넣어둬서 최신 id 값이 1이여서 id=1로 설정.
+  // 현재 500개의 data가 들어 있어 새로운 값은 id가 500 이후로 들아갸야 오류가 없음.
+  id = 500;
   getId = () => {
-    return ++this.id; // 현재 값에서 1을 더한 값을 반환.
+    return ++this.id;
   };
 
-  // 새 데이터 추가.
   handleInsert = () => {
     const { todos, input } = this.state;
 
-    // 새 데이터 객체 만들기
     const newTodo = {
       text: input,
       done: false,
       id: this.getId()
     };
 
-    // 배열 안에 새 데이터를 집어넣음.
     this.setState({
       todos: [...todos, newTodo],
       input: ""
     });
   };
 
-  // todo 아이템 toggle하기
   handleToggle = id => {
-    // id로 배열의 index를 찾는다.
     const { todos } = this.state;
     const index = todos.findIndex(todo => todo.id === id);
-    //이 함수의 원리?? --> array.findeIndex()는 내장 메서드! 원노트(js/method) 정리 참고.
 
-    // 찾은 데이터의 done 값을 반전시킴.
     const toggled = {
       ...todos[index],
       done: !todos[index].done
     };
 
-    // slice를 사용하여 우리가 찾은 index 전후의 데이터들을 복사함.
-    // 그리고 그 사이에는 변경된 todo 객체를 넣어줌.
     this.setState({
       todos: [
         ...todos.slice(0, index),
@@ -69,24 +68,21 @@ class App extends Component {
     });
   };
 
-  // 선택한 id를 배열에서 제거함.
   handleRemove = id => {
     const { todos } = this.state;
     const index = todos.findIndex(todo => todo.id === id);
 
-    // slice로 전후 데이터들을 복사하고, 우리가 찾은 index는 제외.
     this.setState({
       todos: [...todos.slice(0, index), ...todos.slice(index + 1, todos.length)]
     });
   };
 
   render() {
-    const { input, todos } = this.state; // const input = this.state.input;
-    const { handleChange, handleInsert, handleToggle, handleRemove } = this; // const handleChange = this.handleChange;
+    const { input, todos } = this.state;
+    const { handleChange, handleInsert, handleToggle, handleRemove } = this;
 
     return (
       <PageTemplate>
-        {/* onChange와 value의 props를 전달! props와 상태에 대해 조금씩 알아가는 것 같다. */}
         <TodoInput
           onChange={handleChange}
           onInsert={handleInsert}
