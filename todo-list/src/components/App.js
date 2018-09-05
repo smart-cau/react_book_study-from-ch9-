@@ -99,3 +99,13 @@ class App extends Component {
 }
 
 export default App;
+
+/* Chapter 11 정리
+ * shouldComponentUpdate를 구현해야 하는 경우
+   1. 컴포넌트 배열이 렌더링 되는 '리스트' 컴포넌트 일 때
+   2. 리스트 컴포넌트 내부에 있는 '아이템' 컴포넌트 일 때
+   3. 하위 컴포넌트 개수가 많으며, rerendering되지 말아야 할 상황에서도 리렌더링이 진행될 때.
+   - '리스트'를 렌더링할 때는 '언제나' shouldComponentUpdate를 구현해 놓는 것을 습관화 해두자.
+   - 나머지 경우에는 프로젝트를 작업하면서 버벅거린다고 느낄 때 성능조사를 하고, 상황에 따라
+     shouldComponentUpdate를 구현하면 좋다.
+*/
