@@ -1,21 +1,28 @@
-// 3-2. 액션 생성 함수 만들기.
-/*  action 객체를 만드는 액션 생성 함수(action creators)들을 선언한다.
-    여기에서 () => ({})은 function() { return { } }과 동일한 의미이다.
- */
+// 2. 액션 생성 함수 수정.
 
 import * as types from "./ActionTypes";
 
-export const increment = () => ({
-  type: types.INCREMENT
+export const create = color => ({
+  type: types.CREATE,
+  color
 });
 
-export const decrement = () => ({
-  type: types.DECREMENT
+export const remove = () => ({
+  type: types.REMOVE
 });
 
-// 다른 action 생성자들과 달리 parameter를 갖고 있음.
-// parameter로 color를 받고 그 값을 액션 객체 안에 넣음.
-export const setColor = color => ({
+export const increment = index => ({
+  type: types.INCREMENT,
+  index
+});
+
+export const decrement = index => ({
+  type: types.DECREMENT,
+  index
+});
+
+export const setColor = ({ index, color }) => ({
   type: types.SET_COLOR,
+  index,
   color
 });
