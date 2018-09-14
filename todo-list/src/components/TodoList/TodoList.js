@@ -13,13 +13,14 @@ class TodoList extends Component {
   render() {
     const { todos, onToggle, onRemove } = this.props;
     const todoList = todos.map(todo => (
+      // todos객체가 immutable.js로 만들었으므로 그에 맞게 데이터 접근 법을 바꿔줌.
       <TodoItem
-        key={todo.id}
-        done={todo.done}
-        onToggle={() => onToggle(todo.id)}
-        onRemove={() => onRemove(todo.id)}
+        key={todo.get("id")}
+        done={todo.get("done")}
+        onToggle={() => onToggle(todo.get("id"))}
+        onRemove={() => onRemove(todo.get("id"))}
       >
-        {todo.text}
+        {todo.get("text")}
       </TodoItem>
     ));
     return <div>{todoList}</div>;
