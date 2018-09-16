@@ -1,21 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as counterActions from "./modules/counter";
 
 class App extends Component {
   render() {
+    const { CounterActions, number } = this.props;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>{number}</h1>
+        <button onClick={CounterActions.incrementAsync}>+</button>
+        <button onClick={CounterActions.decrementAsync}>-</button>
       </div>
     );
   }
 }
 
-export default App;
+export default connect(
+  state => ({
+    number: state.counter
+  }),
+  dispatch => ({
+    CounterActions: bindActionCreators(counterActions, dispatch)
+  })
+)(App);
