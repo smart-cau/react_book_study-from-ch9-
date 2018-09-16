@@ -1,0 +1,3 @@
+[submodule "Ch 15. Redux-middleware/redux-starter-kit"]
+	path = Ch 15. Redux-middleware/redux-starter-kit
+	url = https://github.com/vlpt-playground/redux-starter-kit.git
