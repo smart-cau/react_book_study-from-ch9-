@@ -1,4 +1,4 @@
-import { handleActions, createAction } from "redux-actions";
+import { handleActions } from "redux-actions";
 
 import axios from "axios";
 
@@ -10,44 +10,24 @@ function getPostAPI(postId) {
 }
 
 // 요청에 관한 action types. 내부에서 사용하기에 export 안함.
+const GET_POST = "GET_POST"; // redux-promise-middleware 사용할 때의 action type.
 const GET_POST_PENDING = "GET_POST_PENDING"; // 요청을 '시작'할 때,
-const GET_POST_SUCCESS = "GET_POST_SUCESS"; // 요청이 '성공'했을 때,
+const GET_POST_SUCCESS = "GET_POST_SUCCESS"; // 요청이 '성공'했을 때,
 const GET_POST_FAILURE = "GET_POST_FAILURE"; //요청이 '실패'했을 때
 
 // createAction's'라고 해서 오류 났었음... 기억하자..
-const getPostPending = createAction(GET_POST_PENDING);
-const getPostSuccess = createAction(GET_POST_SUCCESS);
-const getPostFailure = createAction(GET_POST_FAILURE);
+// const getPostPending = createAction(GET_POST_PENDING);
+// const getPostSuccess = createAction(GET_POST_SUCCESS);
+// const getPostFailure = createAction(GET_POST_FAILURE);
+// ----> redux-promise-middleware의 사용으로 필요 없어짐.
 
-// thunk 생성 함수
-// redux-thunk로 만든 액션 함수는 Promise를 반환한다.
-// 따라서 해당 함수를 호출하고는 뒤에 .then or .catch를 입력해서 구현할 수 있다.
-export const getPost = postId => dispatch => {
-  // 먼저, 요청이 시작했다는 것을 알립니다
-  dispatch(getPostPending());
-
-  // 요청을 시작. 여기서 만든 Promise를 return 해야 나중에 컴포넌트에서
-  // 호출할 때 getPost(). then(....)을 할 수 있음.
-  return getPostAPI(postId)
-    .then(response => {
-      // 요청이 '성공'했다면, 서버 응답 내용을 payload로 설정하여
-      // GET_POST_SUCCESS 액션을 dispatch 한다.       여기서 dispatch의 의미는? '실행한다'의 의미?
-      dispatch(getPostSuccess(response));
-
-      // 나중에 getPostAPI.then을 했을 때, then에 전달하는
-      // 함수에서 response에 접근할 수 있게 함.
-      return response;
-    })
-    .catch(error => {
-      // 오류가 발생하면 오류 내용을 payload로 설정하여
-      // GET_POST_FAILURE 액션을 dispatch 함.
-      dispatch(getPostFailure(error));
-
-      // error를 throw하여 이 함수를 실행한 후,
-      // 다시 한 번 catch할 수 있게 함.
-      throw error;
-    });
-};
+// promise-middleware는 Promise 객체를 payload로 전달하면
+// 요청을 시작 / 성공 / 실패에 따라 _PENDING, _FULFILLED, _REJECTED로 붙여서 반환함. (_SUCCESS, _FAILURE로 커스터마이징함.)
+// --> 위와 같이 각 action type을 일일이 선언할 필요가 없음.
+export const getPost = postId => ({
+  type: GET_POST,
+  payload: getPostAPI(postId)
+});
 
 // InitialState
 const InitialState = {
