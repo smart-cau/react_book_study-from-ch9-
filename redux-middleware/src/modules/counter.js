@@ -27,5 +27,5 @@ export default handleActions(
     [INCREMENT]: (state, action) => state + 1,
     [DECREMENT]: (state, action) => state - 1
   },
-  0
+  1 // counter 숫자를 postId로 사용할 것인데, 0으로 세팅해두면 error 발생하니까 initialState를 1로 조정.
 );
