@@ -13,18 +13,18 @@ class App extends Component {
   */
   // redux-thunk로 만든 액션 함수는 Promise를 반환한다.
   // 따라서 해당 함수를 호출하고는 뒤에 .then or .catch를 입력해서 구현할 수 있다.
-  loadData = () => {
-    const { PostActions, number } = this.props;
-    PostActions.getPost(number) //number는 현재의 counter값.
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  // loadData = () => {
+  //   const { PostActions, number } = this.props;
+  //   PostActions.getPost(number) //number는 현재의 counter값.
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
-  /* ES 7의 'async/await' 문법 활용.    Promise는 ES 6 문법.
+  /* ES 7의 'async/await' 문법 활용.    Promise는 ES 6 문법*/
   loadData = async () => {
     const { PostActions, number } = this.props;
     try {
@@ -34,7 +34,6 @@ class App extends Component {
       console.log(e);
     }
   };
-  */
 
   componentDidMount() {
     // axios
@@ -91,8 +90,8 @@ export default connect(
   state => ({
     number: state.counter,
     post: state.post.data,
-    loading: state.post.pending,
-    error: state.post.error
+    loading: state.pender.pending["GET_POST"],
+    error: state.pender.failure["GET_POST"]
   }),
   dispatch => ({
     CounterActions: bindActionCreators(counterActions, dispatch),
