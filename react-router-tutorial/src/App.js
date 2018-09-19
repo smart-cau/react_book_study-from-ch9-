@@ -2,10 +2,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Home, About } from "./pages";
+import Menu from "./components/Menu";
 
 const App = () => {
   return (
     <div>
+      <Menu />
       {/* Route 컴포넌트 안에서,
           - path 값으로 경로 설정.
           - component 값으로 경로에 따라 렌터링할 component 설정.
