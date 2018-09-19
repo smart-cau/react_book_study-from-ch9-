@@ -1,7 +1,7 @@
 // App.js에서 웹 브라우저의 주소에 따라 어떤 컴포넌트를 보여 줄지 정의할 것임.
 import React from "react";
 import { Route } from "react-router-dom";
-import { Home, About } from "./pages";
+import { Home, About, Posts } from "./pages";
 import Menu from "./components/Menu";
 
 const App = () => {
@@ -18,8 +18,14 @@ const App = () => {
       {/* <Route exact path="/about" component={About} /> */}
       <Route path="/about/:name?" component={About} />
       {/* params객체 안에 .name이라는 key가 생김. ?옵션을 통해 컴포넌트의 중복 방지. */}
+      <Route path="/posts" component={Posts} />
     </div>
   );
 };
 
 export default App;
+
+/*  Router와 Link(NavLink) 구분하기! 둘은 역할이 다르다.
+    Link는 단순하게 그냥 url을 보내는 느낌.
+    Router는 받은 url로 어떤 화면을 보여줄지를 결정함.
+*/

@@ -30,6 +30,11 @@ const Menu = () => {
             React 소개
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/posts" activeStyle={activeStyle}>
+            포스트 목록
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
