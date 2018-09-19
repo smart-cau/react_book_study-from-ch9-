@@ -1,21 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.js에서 웹 브라우저의 주소에 따라 어떤 컴포넌트를 보여 줄지 정의할 것임.
+import React from "react";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+const App = () => {
+  return <div>리액트 라우터를 배워보자</div>;
+};
 
 export default App;
