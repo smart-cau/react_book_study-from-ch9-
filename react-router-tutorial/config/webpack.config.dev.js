@@ -1,4 +1,4 @@
-"use strict";
+// "use strict"; lint에서 필요 없다고 함.
 
 const autoprefixer = require("autoprefixer");
 const path = require("path");
