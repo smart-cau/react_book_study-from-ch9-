@@ -5,6 +5,7 @@ import React from "react";
     이를 위해 라우트로 사용된 component가 받아 오는 props 중 하나인 history 객체의 push 함수 사용!
 */
 const Home = ({ history }) => {
+  console.log(history);
   return (
     <div>
       <h2>홈</h2>
