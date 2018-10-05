@@ -11,7 +11,7 @@ posts.get("/", postsCtrl.list);
 posts.post("/", postsCtrl.write);
 posts.get("/:id", postsCtrl.read);
 posts.delete("/:id", postsCtrl.remove);
-posts.put("/:id", postsCtrl.replace);
+/* posts.put 삭제됨. */
 posts.patch("/:id", postsCtrl.update);
 
 module.exports = posts;
