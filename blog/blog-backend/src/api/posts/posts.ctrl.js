@@ -2,13 +2,19 @@
     await를 사용하려면 함수를 선언하는 부분 앞에 async 키워드를 넣어야함.
     await를 사용할 때는 try~catch 구문으로 오류를 처리해야 함.
 */
-/*  Ch 19.8 요청검증
+/*  Ch 19.8.1 ObjectId 검증
     objectId가 아닌 잘못된 id를 client가 요청할 경우를 대비할 요청검증.
     id 값을 사용하는 read / remove / update에서의 검증이 필요함.
-*/
-const Post = require("../../models/post");
 
+    Ch 19.8.2 Request Body 검증
+    client가 post를 작성을 POST 요청할 때, 서버는 title / body / tags 값을 모두 전달받아야 한다.
+    client가 어느 값을 빼먹었다면 400 error를 발생시켜야함.
+    이를 위해 객체 검증 lib인 joi 설치.
+*/
+
+const Post = require("../../models/post");
 const { ObjectId } = require("mongoose").Types;
+const Joi = require("joi");
 
 // 코드 반복을 피하기 위해 함수를 따로 만듦.
 exports.checkObjectId = (ctx, next) => {
@@ -28,6 +34,24 @@ exports.checkObjectId = (ctx, next) => {
     { title, body }
 */
 exports.write = async ctx => {
+  // 객체가 지닌 값들을 검증
+  const schema = Joi.object().keys({
+    title: Joi.string().required(), // required()를 붙여주면 필수항목이라는 의미.
+    body: Joi.string().required(),
+    tags: Joi.array()
+      .items(Joi.string())
+      .required() // 문자열 배열
+  });
+
+  // 첫 번째 param은 검증할 객체 / 두 번째는 schema
+  const result = Joi.validate(ctx.request.body, schema);
+
+  // error 발생하면 error 내용 응답
+  if (result.error) {
+    (ctx.status = 400), (ctx.body = result.error);
+    return;
+  }
+
   const { title, body, tags } = ctx.request.body;
 
   //  새 Post 인스턴스를 만듦. 새 인스터스를 만들 때는 new 사용.
