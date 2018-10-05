@@ -2,8 +2,27 @@
     await를 사용하려면 함수를 선언하는 부분 앞에 async 키워드를 넣어야함.
     await를 사용할 때는 try~catch 구문으로 오류를 처리해야 함.
 */
-
+/*  Ch 19.8 요청검증
+    objectId가 아닌 잘못된 id를 client가 요청할 경우를 대비할 요청검증.
+    id 값을 사용하는 read / remove / update에서의 검증이 필요함.
+*/
 const Post = require("../../models/post");
+
+const { ObjectId } = require("mongoose").Types;
+
+// 코드 반복을 피하기 위해 함수를 따로 만듦.
+exports.checkObjectId = (ctx, next) => {
+  const { id } = ctx.params;
+
+  // 검증실패
+  if (!ObjectId.isValid(id)) {
+    ctx.status = 400; // 400 Bad Request
+    return null;
+  }
+
+  return next(); // next를 리턴해야 ctx.body가 제대로 설정됨.
+};
+
 /*  포스트 작성
     POST /api/posts
     { title, body }

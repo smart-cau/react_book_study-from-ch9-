@@ -9,9 +9,9 @@ const posts = new Router();
 
 posts.get("/", postsCtrl.list);
 posts.post("/", postsCtrl.write);
-posts.get("/:id", postsCtrl.read);
-posts.delete("/:id", postsCtrl.remove);
+posts.get("/:id", postsCtrl.checkObjectId, postsCtrl.read); // 순서 잘 지켜야함!
+posts.delete("/:id", postsCtrl.checkObjectId, postsCtrl.remove);
 /* posts.put 삭제됨. */
-posts.patch("/:id", postsCtrl.update);
+posts.patch("/:id", postsCtrl.checkObjectId, postsCtrl.update);
 
 module.exports = posts;
