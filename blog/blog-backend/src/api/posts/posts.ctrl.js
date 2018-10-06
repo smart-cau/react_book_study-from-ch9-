@@ -71,10 +71,48 @@ exports.write = async ctx => {
 };
 
 exports.list = async ctx => {
+  /*  Ch 19.9 Pagenation 구현하기
+  1) 가짜데이터 생성 (post man으로 함.)
+  2) 포스트를 역순으로 정렬하기(= 최신 포스트 먼저 보여주기.)
+  ---> .sort({ key: -1 or 1 }) 사용. 1은 오름차순, -1은 내림차순 정렬.
+  3) 보이는 개수 제한.
+  ---> .limit(제한할 갯수) 함수 사용!
+  4) 페이지기능 구현
+  ---> .skip(불러올 갯수n) 함수 사용. 그러면 처음의 n개를 제외하고 다음 n개를 불러옴. n(page 값)을query로 받아오겠음.
+  5) 마지막 페이지 번호 알려주기.
+  6) 미리보기 내용 길이 제한.
+  ---> (a) .toJSON() 사용. (b) .lean() 사용.  // (b) 방법으로 사용. (a) 는 472p 참고.
+  */
+
+  // page가 주어지지 않았다면 1로 간주.
+  // query는 문자열 형태로 받아 오므로 숫자로 변환!
+  const page = parseInt(ctx.query.page || 1, 10);
+
+  // 잘못된 페이지가 주어졌다면 오류.
+  if (page < 1) {
+    ctx.status = 400;
+    return;
+  }
   try {
-    const posts = await Post.find().exec(); // find() 함수를 호출한후에 exec()를 붙여 주어야 서버에 쿼리를 요청한다.
-    // data를 조회할 때, 특정 조건을 설정할 수 있으며 불러오는 제한도 설정할 수 있다. 이 부분은 추후 pagenation 기능 구현할 때 알아볼 것.
-    ctx.body = posts;
+    const posts = await Post.find()
+      .sort({ _id: -1 })
+      .limit(10)
+      .skip((page - 1) * 10)
+      .lean()
+      .exec(); // find() 함수를 호출한후에 exec()를 붙여 주어야 서버에 쿼리를 요청한다.
+
+    // 5) 마지막 페이지 번호 알려주기.
+    const postCount = await Post.countDocuments().exec();
+
+    // 마지막 페이지 알려주기. ctx.set은 response header를 설정.
+    ctx.set("Last-Page", Math.ceil(postCount / 10));
+
+    const limitBodyLength = post => ({
+      ...post,
+      body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
+    });
+
+    ctx.body = posts.map(limitBodyLength);
   } catch (e) {
     ctx.throw(e, 500);
   }
