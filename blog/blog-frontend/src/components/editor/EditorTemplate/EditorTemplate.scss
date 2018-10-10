@@ -18,5 +18,13 @@
       cursor: col-resize; // 리사이즈 커서
       //background: black; // 임시. 잘 작동하는거 확인하면 지우기.
     }
+    @include media("<medium") {
+      .editor {
+        flex: 1!important;
+      }
+      .preview, .separator {
+        display: none;
+      }
+    }
   }
 }
