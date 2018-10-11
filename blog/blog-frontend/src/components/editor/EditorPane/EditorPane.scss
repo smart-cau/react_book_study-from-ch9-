@@ -21,7 +21,15 @@
 
   .code-editor {
     flex: 1; // 남은 영역 다 차지
-    background: $oc-gray-9
+    background: $oc-gray-9;
+    display: flex;
+    flex-direction: column; // .CodeMirror(자동으로 생성되는 class)가 세로 영역을 전부 차지.
+    :global .CodeMirror { // :global 없이 그냥 .CodeMirror라고 하면 일만 CSS가적영되어 고유 id를 가진 class 이름을 생성한다.
+      font-size: 1rem;    // 하지만 :glbaol 키워드를 붙여주면 해당 클래스에는 CSS MOdule을 적용하지 않는다. --- 뭔말이여.
+      flex: 1;
+      font-family: 'D2 Coding';
+    }
+
   }
 
   .tags {
