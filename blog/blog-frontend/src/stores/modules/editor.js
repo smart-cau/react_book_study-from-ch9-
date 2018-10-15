@@ -24,7 +24,10 @@ export default handleActions(
     [INITIALIZE]: (state, action) => initialize,
     [CHANGE_INPUT]: (state, action) => {
       const { name, value } = action.payload;
-      return state.set(name, value); // name이랑 value를 state의 어느 값에 담는거?
+      // name이랑 value를 state의 어느 값에 담는거? --> 그러게 어디에 set하는거지?
+      let temp = state.set(name, value);
+      console.log(temp.toJS());
+      return temp; // .set은 immutable의 메소드! 값 수정에 사용.
     }
   },
   initialState

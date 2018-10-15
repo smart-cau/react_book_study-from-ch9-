@@ -53,7 +53,7 @@ class EditorPane extends Component {
   handleChange = e => {
     const { onChangeInput } = this.props;
     const { value, name } = e.target; // ---> 여기서 문제 발생. 진짜 말도 안되는 오타..... 죽자...
-    console.log(value, name);
+    // console.log(value, name);
     onChangeInput({ name, value });
   };
 

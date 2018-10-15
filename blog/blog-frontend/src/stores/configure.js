@@ -7,7 +7,8 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import penderMiddleware from "redux-pender";
 import * as modules from "./modules";
 
-const reducers = combineReducers(modules); // modules에 있는 모든 modules들을 combineReducers로 합쳐줌.
+// modules에 있는 모든 modules들을 combineReducers로 합쳐줌. --> 파일 전체에서 state.~~로 접근 가능!
+const reducers = combineReducers(modules);
 const middlewares = [penderMiddleware()]; // penderMiddleware 적용.
 
 // 개발 모드일 때만 Redux Devtools를 적용.

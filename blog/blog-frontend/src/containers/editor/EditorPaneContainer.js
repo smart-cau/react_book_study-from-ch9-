@@ -29,7 +29,7 @@ class EditorPaneContainer extends Component {
 
 export default connect(
   state => ({
-    title: state.editor.get("title"),
+    title: state.editor.get("title"), // ..get("") --> immutable.js의 method!
     markdown: state.editor.get("markdown"),
     tags: state.editor.get("tags")
   }),
