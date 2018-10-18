@@ -47,6 +47,10 @@ class MarkdownRender extends Component {
     };
   }
 
+  componentDidMount() {
+    Prism.highlightAll(); // /post에 나오는 작성된 글 하이라이팅.
+  }
+
   componentDidUpdate(prevProps, prevState) {
     // markdown 값이 변경되면 renderMarkdown을 호출합니다.
     if (prevProps.markdown !== this.props.markdown) {
