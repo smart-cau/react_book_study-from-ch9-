@@ -1,13 +1,12 @@
 import React from "react";
 import PageTemplate from "components/common/PageTemplate";
-import PostInfo from "components/post/PostInfo";
-import PostBody from "components/post/PostBody";
+import Post from "containers/post/Post";
 
-const PostPage = () => {
+const PostPage = ({ match }) => {
+  const { id } = match.params; // 이거 뭐였지.. Ch 18에서 봤었다.. 질문.
   return (
     <PageTemplate>
-      <PostInfo />
-      <PostBody />
+      <Post id={id} />
     </PageTemplate>
   );
 };
