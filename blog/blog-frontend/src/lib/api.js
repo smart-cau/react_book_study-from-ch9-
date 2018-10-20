@@ -13,4 +13,4 @@ export const getPost = id => axios.get(`/api/posts/${id}`);
     - 객체를 URL 쿼리 문자열로 변환할 때 -> querystring.stringify() 사용.
 */
 export const getPostList = ({ tag, page }) =>
-  axios.get(`/api/posts/${queryString.stringify({ tag, page })}`);
+  axios.get(`/api/posts/?${queryString.stringify({ tag, page })}`);

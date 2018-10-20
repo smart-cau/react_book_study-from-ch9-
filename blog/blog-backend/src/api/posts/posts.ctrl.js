@@ -87,6 +87,14 @@ exports.list = async ctx => {
   // page가 주어지지 않았다면 1로 간주.
   // query는 문자열 형태로 받아 오므로 숫자로 변환!
   const page = parseInt(ctx.query.page || 1, 10);
+  /* -- Ch 21.3.6 API에서 tag 분류 -- */
+  const { tag } = ctx.query;
+
+  const query = tag
+    ? {
+        tags: tag //tags 배열에 tag를 가진 포스트 찾기.
+      }
+    : {};
 
   // 잘못된 페이지가 주어졌다면 오류.
   if (page < 1) {
@@ -94,7 +102,7 @@ exports.list = async ctx => {
     return;
   }
   try {
-    const posts = await Post.find()
+    const posts = await Post.find(query)
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)

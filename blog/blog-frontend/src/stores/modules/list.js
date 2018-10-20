@@ -26,7 +26,7 @@ export const getPostList = createAction(
 
 // initial state
 const initialState = Map({
-  posts: List().getPostList, // 이것도 정확히 이해 x
+  posts: List(), // 빈 List를 만든다.
   lastPage: null
 });
 

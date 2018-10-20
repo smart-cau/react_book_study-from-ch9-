@@ -10,6 +10,7 @@ const ListPage = ({ match }) => {
   return (
     <PageTemplate>
       <ListWrapper>
+        {/* pagination할 때 page번호. 10진법으로 전환. */}
         <ListContainer page={parseInt(page, 10)} tag={tag} />
       </ListWrapper>
     </PageTemplate>

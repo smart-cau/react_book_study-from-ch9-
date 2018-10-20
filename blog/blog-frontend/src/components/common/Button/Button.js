@@ -3,6 +3,7 @@
     - to 값을 props로 전달했을 때는 Link 컴포넌트를 사용하고,
     - to 값이 없을 때는 div 태그를 사용한다.
     theme props를 받아서, 이에 따라 다른 스타일을 설정하면 Button 컴포넌트의 스타일을 여러 종류로 만들 수 있다.
+    ---> 이 방법 반드시 기억!!!!!!
 */
 
 import React from "react";
