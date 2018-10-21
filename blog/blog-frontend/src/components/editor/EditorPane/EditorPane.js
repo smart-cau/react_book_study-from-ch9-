@@ -32,18 +32,18 @@ const cx = classNames.bind(styles);
 
 class EditorPane extends Component {
   editor = null; // editor ref.
-  CodeMirror = null; // CodeMirror 인스턴스.
+  codeMirror = null; // codeMirror 인스턴스.
   cursor = null; // 에디터의 텍스트 cursor 위치.
 
   initializeEditor = () => {
-    this.CodeMirror = CodeMirror(this.editor, {
+    this.codeMirror = CodeMirror(this.editor, {
       mode: "markdown",
       theme: "monokai",
       lineNumbers: true, // 왼쪽에 라인 넘버 띄우기
       lineWrapping: true // 내용이 너무 길면 다음 줄에 작성.
     });
-    // input 태그와는 달리, CodeMirror에 initializeEditor 함수가 호출될 때 onChange 이벤트를 직접 등록함.
-    this.CodeMirror.on("change", this.handleChangeMarkdown);
+    // input 태그와는 달리, codeMirror에 initializeEditor 함수가 호출될 때 onChange 이벤트를 직접 등록함.
+    this.codeMirror.on("change", this.handleChangeMarkdown);
   };
 
   componentDidMount() {

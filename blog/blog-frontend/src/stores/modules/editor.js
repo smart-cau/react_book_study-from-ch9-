@@ -8,12 +8,15 @@ import * as api from "lib/api";
 const INITIALIZE = "editor/INITIALIZE";
 const CHANGE_INPUT = "editor/CHANGE_INPUT";
 const WRITE_POST = "editor/WRITE_POST";
+const GET_POST = "edior/GET_POST";
+const EDIT_POST = "editor/EDIT_POST";
 
 // action creators
 export const initialize = createAction(INITIALIZE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const writePost = createAction(WRITE_POST, api.writePost);
-
+export const getPost = createAction(GET_POST, api.getPost); // createAction의 두번째 인자로 넘겨주는건 무슨 역할을 함? 질문.
+export const editPost = createAction(EDIT_POST, api.editPost);
 // initial state
 const initialState = Map({
   title: "",
@@ -36,6 +39,16 @@ export default handleActions(
       onSuccess: (state, action) => {
         const { _id } = action.payload.data;
         return state.set("postId", _id);
+      }
+    }),
+    ...pender({
+      type: GET_POST,
+      onSuccess: (state, action) => {
+        const { title, body, tags } = action.payload.data;
+        return state
+          .set("title", title)
+          .set("markdown", body)
+          .set("tags", tags.join(",")); // 배열 -> ,쉼표로 구분된 문자열.
       }
     })
   },

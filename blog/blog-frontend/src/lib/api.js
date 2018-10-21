@@ -14,3 +14,9 @@ export const getPost = id => axios.get(`/api/posts/${id}`);
 */
 export const getPostList = ({ tag, page }) =>
   axios.get(`/api/posts/?${queryString.stringify({ tag, page })}`);
+
+/*  // 수정하기 API 함수.
+- writePost와 비슷하지만, axios.patch를 사용하고, id 값을 추가로 받는다ㅡ.
+*/
+export const editPost = ({ title, body, tags, id }) =>
+  axios.patch(`/api/posts/${id}`, { title, body, tags });
