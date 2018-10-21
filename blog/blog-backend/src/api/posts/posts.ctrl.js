@@ -29,6 +29,18 @@ exports.checkObjectId = (ctx, next) => {
   return next(); // next를 리턴해야 ctx.body가 제대로 설정됨.
 };
 
+/* Ch 21.5.4 인증이 필요한 API 보호.
+  - post, delete, patch API 라우트에서 checkObjectId 함수를 사전 수행하게 했던 것처럼,
+  - checkLogin 함수를 만들어 API를 처리할 때 인증 상태를 확인한 후 작업을 진행하도록 코드 작성.
+*/
+exports.checkLogin = (ctx, next) => {
+  if (!ctx.session.logged) {
+    ctx.status = 401; //Unauthorized
+    return null;
+  }
+  return next();
+};
+
 /*  포스트 작성
     POST /api/posts
     { title, body }

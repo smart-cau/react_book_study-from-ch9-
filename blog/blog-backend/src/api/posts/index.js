@@ -8,10 +8,22 @@ const postsCtrl = require("./posts.ctrl");
 const posts = new Router();
 
 posts.get("/", postsCtrl.list);
-posts.post("/", postsCtrl.write);
 posts.get("/:id", postsCtrl.checkObjectId, postsCtrl.read); // 순서 잘 지켜야함!
-posts.delete("/:id", postsCtrl.checkObjectId, postsCtrl.remove);
+
+// Login 검사하고 -> (id 있나 검사하고) -> 함수 실행.
+posts.post("/", postsCtrl.checkLogin, postsCtrl.write);
+posts.delete(
+  "/:id",
+  postsCtrl.checkLogin,
+  postsCtrl.checkObjectId,
+  postsCtrl.remove
+);
 /* posts.put 삭제됨. */
-posts.patch("/:id", postsCtrl.checkObjectId, postsCtrl.update);
+posts.patch(
+  "/:id",
+  postsCtrl.checkLogin,
+  postsCtrl.checkObjectId,
+  postsCtrl.update
+);
 
 module.exports = posts;
