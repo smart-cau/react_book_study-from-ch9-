@@ -20,3 +20,6 @@ export const getPostList = ({ tag, page }) =>
 */
 export const editPost = ({ title, body, tags, id }) =>
   axios.patch(`/api/posts/${id}`, { title, body, tags });
+
+// 삭제 API 함수.
+export const removePost = id => axios.delete(`/api/posts/${id}`);
