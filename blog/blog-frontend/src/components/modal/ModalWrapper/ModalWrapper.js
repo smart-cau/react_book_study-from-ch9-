@@ -13,14 +13,45 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 class ModalWrapper extends Component {
+  // 애니메이션 사용방법 기억!!
+  state = {
+    animate: false
+  };
+
+  startAnimation = () => {
+    // animate값을 true로 설정 후,
+    this.setState({
+      animate: true
+    });
+    // scss에서 설정한 250ms 이후 다시 false로 설정.
+    setTimeout(() => {
+      this.setState({
+        animate: false
+      });
+    }, 250);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.visible !== this.props.visible) {
+      this.startAnimation();
+    }
+  }
+
   render() {
     const { children, visible } = this.props;
-    if (!visible) return null; // visible이 true 일 때만 modal이 보임.
+    const { animate } = this.state;
+
+    // visible 값과 animate 값이 둘 다 false일 때만
+    // null을 리턴.
+    if (!visible && !animate) return null; // visible이 true 일 때만 modal이 보임.
+
+    // 상태에 따라 애니메이션 설정.
+    const animation = animate && (visible ? "enter" : "leave");
 
     return (
-      <div className={cx("gray-background")}>
+      <div className={cx("gray-background", animation)}>
         <div className={cx("modal-wrapper")}>
-          <div className={cx("modal")}>{children}</div>
+          <div className={cx("modal", animation)}>{children}</div>
         </div>
       </div>
     );
