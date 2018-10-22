@@ -7,19 +7,32 @@ import * as baseActions from "stores/modules/base";
 
 class FooterContainer extends Component {
   handleLoginClick = async () => {
-    const { BaseActions } = this.props;
+    const { BaseActions, logged } = this.props;
+    // 로그인 되어 있을 때 클릭하면 로그아웃 시키고,
+    if (logged) {
+      try {
+        await BaseActions.logout();
+        window.location.reload(); // 페이지 새로 고침. - 기억
+      } catch (e) {
+        console.log(e);
+      }
+      return;
+    }
+    // 로그인 되어있지 않으면 로그인 모달을 보여준다. + 로그인 모달 상태 초기화.
     BaseActions.showModal("login");
+    BaseActions.initializeLoginModal();
   };
 
   render() {
     const { handleLoginClick } = this;
-    return <Footer onLoginClick={handleLoginClick} />;
+    const { logged } = this.props;
+    return <Footer onLoginClick={handleLoginClick} logged={logged} />;
   }
 }
 
 export default connect(
   state => ({
-    // 추후 입력
+    logged: state.base.get("logged")
   }),
   dispatch => ({
     BaseActions: bindActionCreators(baseActions, dispatch)

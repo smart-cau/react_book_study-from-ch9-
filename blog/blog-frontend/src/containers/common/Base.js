@@ -14,7 +14,14 @@ import * as baseActions from "stores/modules/base";
 
 class Base extends Component {
   initialize = async () => {
-    // 로그인 상태 확인(추후 작성)
+    // 새로고침을 해도 클라이언트에서 로그인 상태를 유지하기 위한 조치.
+    // 하지만, checkLogin API가 응답할 때까지는 임시적으로 로그인 상태를 유지해야 한다.
+    // -> /modules/base.js에 TEMP_LOGIN 액션 + HTML5의 localStorage 사용!
+    const { BaseActions } = this.props;
+    if (localStorage.logged === "true") {
+      BaseActions.tempLogin();
+    }
+    BaseActions.checkLogin();
   };
 
   componentDidMount() {

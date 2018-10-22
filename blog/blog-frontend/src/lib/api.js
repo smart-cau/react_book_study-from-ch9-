@@ -23,3 +23,9 @@ export const editPost = ({ title, body, tags, id }) =>
 
 // 삭제 API 함수.
 export const removePost = id => axios.delete(`/api/posts/${id}`);
+
+/* 로그인 API starts */
+export const login = password => axios.post(`/api/auth/login`, { password });
+export const checkLogin = () => axios.get(`/api/auth/check`);
+export const logout = () => axios.post(`/api/auth/logout`);
+/* 로그인 API ends */
