@@ -16,7 +16,7 @@ class Post extends Component {
   initialize = async () => {
     const { PostActions, id } = this.props;
     try {
-      await PostActions.getPost(id); // 여기도 글케 이해는 안됨... 질문
+      await PostActions.getPost(id); // 여기도 글케 이해는 안됨... 질문 --> 솔직히 정확히 어떤 원리인지는 아직은 잘 모르겠다.
     } catch (e) {
       console.log(e);
     }
@@ -46,7 +46,8 @@ class Post extends Component {
 export default connect(
   state => ({
     post: state.post.get("post"),
-    loading: state.pender.pending["post/GET_POST"] // 로딩상태 --> 무슨의미? 어디서 온거? 질문
+    loading: state.pender.pending["post/GET_POST"]
+    // 로딩상태 --> 무슨의미? 어디서 온거? 질문 --> 그냥 pender가 기본적으로 제공하는 기능. loading = state.pender.peding['로딩되는 액션 이름']
   }),
   dispatch => ({
     PostActions: bindActionCreators(postActions, dispatch)

@@ -23,6 +23,8 @@ export const getPostList = createAction(
   api.getPostList,
   meta => meta
 ); // meta의 역할?
+// --> meta데이터 생성. 이 경우 이 액션을 사용해 만들어진 객체에는 meta : meta 형태의 값을 가짐.
+//  참고 : https://redux-actions.js.org/api/createaction
 
 // initial state
 const initialState = Map({
@@ -36,9 +38,10 @@ export default handleActions(
     ...pender({
       type: GET_POST_LIST,
       onSuccess: (state, action) => {
-        const { data: posts } = action.payload; // 질문. 이거의 의미..
+        // 질문. 이거의 의미.. --> action.payload = {data: posts}의 형태에서 posts = action.payload.data.posts
+        const { data: posts } = action.payload;
 
-        const lastPage = action.payload.headers["last-page"];
+        const lastPage = action.payload.headers["last-page"]; // axios는 헤더까지 읽어서 payload에 담나?? console로 찍어보자.
 
         return state
           .set("posts", fromJS(posts))

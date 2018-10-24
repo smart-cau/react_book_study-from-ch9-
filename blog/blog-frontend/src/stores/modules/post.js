@@ -24,7 +24,6 @@ export default handleActions(
     ...pender({
       type: GET_POST,
       onSuccess: (state, action) => {
-        // 아래 이게 무슨 의미더라...
         const { data: post } = action.payload;
         return state.set("post", fromJS(post)); // fromJs() --> 일반 객체를 immutabler 객체로 전환.
       }

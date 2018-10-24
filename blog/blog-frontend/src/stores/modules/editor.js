@@ -15,8 +15,9 @@ const EDIT_POST = "editor/EDIT_POST";
 export const initialize = createAction(INITIALIZE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const writePost = createAction(WRITE_POST, api.writePost);
-export const getPost = createAction(GET_POST, api.getPost); // createAction의 두번째 인자로 넘겨주는건 무슨 역할을 함? 질문.
+export const getPost = createAction(GET_POST, api.getPost);
 export const editPost = createAction(EDIT_POST, api.editPost);
+// createAction의 두번째 인자로 넘겨주는건 무슨 역할을 함? 질문. --> payloaderCreator라는 이름. 공식문서 참고. https://redux-actions.js.org/api/createaction
 // initial state
 const initialState = Map({
   title: "",
